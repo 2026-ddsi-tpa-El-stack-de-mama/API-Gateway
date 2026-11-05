@@ -45,13 +45,18 @@ public class PruebaController {
     public ResponseEntity<String> getD(){
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body("Llegan bien los request");
+                .body("Llegan bien los request a GW");
     
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<String> getNum(@PathVariable("id") String pruebaID){
-        return ResponseEntity.status(HttpStatus.OK).body("Llega bien el request"+ pruebaID);
+        return ResponseEntity.status(HttpStatus.OK).body("Llega bien el request a GW: "+ pruebaID);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<LocalDate> getLocalDate(){
+        return ResponseEntity.status(HttpStatus.OK).body(LocalDate.now());
     }
 
     // ------------------- PARA PRUEBA -----------------

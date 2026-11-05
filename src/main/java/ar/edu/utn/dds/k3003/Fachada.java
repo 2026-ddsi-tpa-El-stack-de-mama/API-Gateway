@@ -1,6 +1,7 @@
 package ar.edu.utn.dds.k3003;
 
 import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.DonacionDTO;
+import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.EstadoDonacionEnum;
 import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.ProductoDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.DonadorDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.DonadorStatsDTO;
@@ -16,7 +17,10 @@ import ar.edu.utn.dds.k3003.clientes.LogisticaClient;
 import ar.edu.utn.dds.k3003.dtosBot.InsigniasResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -190,5 +194,17 @@ public class Fachada {
 
     public ResponseEntity<DonacionDTO> eliminarDonacion(String id){
         return donacionesClient.deleteDonacion(id);
+    }
+
+    public ResponseEntity<?> findByDonadorAndFechaInicio(String donadorID, LocalDate fecha){
+        return donacionesClient.findByDonadorAndFechaInicio(donadorID, fecha);
+    }
+
+    public ResponseEntity<?> cambiarEstadoDeDonacion(String donacionID, EstadoDonacionEnum estado){
+        return donacionesClient.cambiarEstadoDeDonacion(donacionID, estado);
+    }
+
+    public ResponseEntity<?> registrarQuejaEnDonacion(String donacionID, String descripcion){
+        return donacionesClient.registrarQuejaEnDonacion(donacionID, descripcion);
     }
 }

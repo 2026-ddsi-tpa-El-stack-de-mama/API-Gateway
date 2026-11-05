@@ -1,11 +1,13 @@
 package ar.edu.utn.dds.k3003.clientes;
 
 import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.DonacionDTO;
+import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.EstadoDonacionEnum;
 import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.ProductoDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @FeignClient(name = "donaciones", url = "${FACHADA_D}")
@@ -37,4 +39,15 @@ public interface DonacionesClient {
 
     @DeleteMapping("/donaciones/{id}")
     public ResponseEntity<DonacionDTO> deleteDonacion(@PathVariable("id") String donacionID);
+
+    @GetMapping("/search/{id}/{date}")
+    public ResponseEntity<?> findByDonadorAndFechaInicio(@PathVariable("id") String donadorID, @PathVariable("date") LocalDate fecha);
+    
+    @PatchMapping("/{id}/estado")
+    public ResponseEntity<?> cambiarEstadoDeDonacion(@PathVariable("id") String donacionID, @RequestParam EstadoDonacionEnum estado);
+    
+    @PostMapping("/{id}/queja")
+    public ResponseEntity<?> registrarQuejaEnDonacion(
+            @PathVariable("id") String donacionID, 
+            @RequestBody String descripcion);
 }

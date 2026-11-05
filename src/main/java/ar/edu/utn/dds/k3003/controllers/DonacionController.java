@@ -51,18 +51,6 @@ public class DonacionController {
         return this.fachada.obtenerDonaciones();
     }
 
-    // ------------------- PARA PRUEBA -----------------
-    @GetMapping("/donaciones/prueba")
-    public ResponseEntity<?> getDonacionesPrueba(){
-        return this.fachada.obtenerDonaciones();
-    }
-    /*
-    @DeleteMapping("/donaciones")
-    public ResponseEntity<Integer> deleteDonaciones() {
-        fachada.borrarDonaciones();
-        return ResponseEntity.ok(200);
-    }
-    */
     @DeleteMapping("/donaciones/{id}")
     public ResponseEntity<DonacionDTO> deleteDonacion(@PathVariable("id") String donacionID) {
         //DonacionDTO donacionEliminada = fachada.eliminarDonacion(donacionID);
@@ -70,31 +58,17 @@ public class DonacionController {
         return this.fachada.eliminarDonacion(donacionID);
     
     }
-
-    /*
+    
     @GetMapping("/donaciones/search/{id}/{date}")
     public ResponseEntity<?> findByDonadorAndFechaInicio(@PathVariable("id") String donadorID, @PathVariable("date") LocalDate fecha){
-        String requestId = MDC.get("request_id");
-        try{
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(this.fachada.findByDonadorAndFechaInicio(donadorID, fecha)) ;
-        }catch(RuntimeException ex){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("X-Request-Id", requestId).body(ex.getMessage());
-        }
+        return this.fachada.findByDonadorAndFechaInicio(donadorID, fecha);
     }
 
     @PatchMapping("/donaciones/{id}/estado")
     public ResponseEntity<?> cambiarEstadoDeDonacion(
             @PathVariable("id") String donacionID, 
             @RequestParam EstadoDonacionEnum estado){
-        String requestId = MDC.get("request_id");
-        try{
-        DonacionDTO nuevaVersionDonacion = fachada.cambiarEstadoDeDonacion(donacionID, estado);
-        return ResponseEntity.ok(nuevaVersionDonacion);
-        }catch(RuntimeException ex){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("X-Request-Id", requestId).body(ex.getMessage());
-        }
+        return fachada.cambiarEstadoDeDonacion(donacionID, estado);  
     }
 
     //Versión nueva de registrarQuejaEnDonacion
@@ -102,13 +76,7 @@ public class DonacionController {
     public ResponseEntity<?> registrarQuejaEnDonacion(
             @PathVariable("id") String donacionID, 
             @RequestBody String descripcion){
-        String requestId = MDC.get("request_id");
-        try{
-            DonacionDTO donacionConQueja = fachada.registrarQuejaEnDonacion(donacionID,descripcion);
-            return ResponseEntity.ok(donacionConQueja);
-        }catch(RuntimeException ex){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("X-Request-Id", requestId).body(ex.getMessage());
-        }
+            return fachada.registrarQuejaEnDonacion(donacionID,descripcion);
     }
-    */
+    
 }
