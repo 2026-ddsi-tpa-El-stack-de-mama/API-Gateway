@@ -176,8 +176,8 @@ public class Fachada {
         return logisticaClient.getPaquetes();
     }
 
-    public DonacionDTO registrarDonacion(DonacionDTO donacionDTO) {
-        return (DonacionDTO) donacionesClient.postDonacion(donacionDTO).getBody();
+    public ResponseEntity<?> registrarDonacion(DonacionDTO donacionDTO) {
+        return donacionesClient.postDonacion(donacionDTO);
     }
 
     public ResponseEntity<?> buscarDonacion(String id){

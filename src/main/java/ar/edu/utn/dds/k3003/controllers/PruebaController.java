@@ -33,36 +33,6 @@ public class PruebaController {
     // ----- ------------- -----
     // ----- De donaciones -----
     // ----- ------------- -----
-
-    @PostMapping("/donaciones")
-    public ResponseEntity<?> postDonacion(@RequestBody DonacionDTO donacionDTO) {
-        //Para prueba
-        String requestId = MDC.get("request_id");
-        try{
-        System.out.println(donacionDTO);
-        DonacionDTO donacionAgregada = fachada.registrarDonacion(donacionDTO);
-        return ResponseEntity.ok(donacionAgregada);
-        } catch (RuntimeException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("X-Request-Id", requestId).body(ex.getMessage());
-        }
-    }
-
-    // Versión nueva de getDonacionByID
-    @GetMapping("/donaciones/{id}")
-	public ResponseEntity<?> getDonacionById(@PathVariable("id") String donacionID) {
-	    String requestId = MDC.get("request_id");
-        try{
-            return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(this.fachada.buscarDonacion(donacionID));
-        }catch(RuntimeException ex){
-            if (ex.getMessage() != null && ex.getMessage().toLowerCase().contains("no existe")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).header("X-Request-Id", requestId).body(ex.getMessage());
-            }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("X-Request-Id", requestId).body(ex.getMessage());
-        }
-	}
-    //Agregado
     @GetMapping("/donaciones")
     public ResponseEntity<?> getDonaciones(){
         return ResponseEntity
@@ -90,59 +60,4 @@ public class PruebaController {
         return this.fachada.obtenerDonaciones();
     
     }
-    /*
-    @DeleteMapping("/donaciones")
-    public ResponseEntity<Integer> deleteDonaciones() {
-        fachada.borrarDonaciones();
-        return ResponseEntity.ok(200);
-    }
-    */
-    @DeleteMapping("/donaciones/{id}")
-    public ResponseEntity<DonacionDTO> deleteDonacion(@PathVariable("id") String donacionID) {
-        //DonacionDTO donacionEliminada = fachada.eliminarDonacion(donacionID);
-        //return ResponseEntity.ok(donacionEliminada);
-        return this.fachada.eliminarDonacion(donacionID);
-    
-    }
-
-    /*
-    @GetMapping("/donaciones/search/{id}/{date}")
-    public ResponseEntity<?> findByDonadorAndFechaInicio(@PathVariable("id") String donadorID, @PathVariable("date") LocalDate fecha){
-        String requestId = MDC.get("request_id");
-        try{
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(this.fachada.findByDonadorAndFechaInicio(donadorID, fecha)) ;
-        }catch(RuntimeException ex){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("X-Request-Id", requestId).body(ex.getMessage());
-        }
-    }
-
-    @PatchMapping("/donaciones/{id}/estado")
-    public ResponseEntity<?> cambiarEstadoDeDonacion(
-            @PathVariable("id") String donacionID, 
-            @RequestParam EstadoDonacionEnum estado){
-        String requestId = MDC.get("request_id");
-        try{
-        DonacionDTO nuevaVersionDonacion = fachada.cambiarEstadoDeDonacion(donacionID, estado);
-        return ResponseEntity.ok(nuevaVersionDonacion);
-        }catch(RuntimeException ex){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("X-Request-Id", requestId).body(ex.getMessage());
-        }
-    }
-
-    //Versión nueva de registrarQuejaEnDonacion
-    @PostMapping("/donaciones/{id}/queja")
-    public ResponseEntity<?> registrarQuejaEnDonacion(
-            @PathVariable("id") String donacionID, 
-            @RequestBody String descripcion){
-        String requestId = MDC.get("request_id");
-        try{
-            DonacionDTO donacionConQueja = fachada.registrarQuejaEnDonacion(donacionID,descripcion);
-            return ResponseEntity.ok(donacionConQueja);
-        }catch(RuntimeException ex){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("X-Request-Id", requestId).body(ex.getMessage());
-        }
-    }
-    */
 }
