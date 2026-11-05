@@ -54,7 +54,7 @@ public class PruebaController {
         return ResponseEntity.status(HttpStatus.OK).body("Llega bien el request a GW: "+ pruebaID);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/LocalDate")
     public ResponseEntity<LocalDate> getLocalDate(){
         return ResponseEntity.status(HttpStatus.OK).body(LocalDate.now());
     }

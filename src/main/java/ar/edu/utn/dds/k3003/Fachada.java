@@ -17,8 +17,6 @@ import ar.edu.utn.dds.k3003.clientes.LogisticaClient;
 import ar.edu.utn.dds.k3003.dtosBot.InsigniasResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -39,6 +37,9 @@ public class Fachada {
         this.logisticaClient = logisticaClient;
     }
 
+    // ---------------------------------
+    // ----- Donadores y Entidades -----
+    // ---------------------------------
     public DonadorDTO registrarDonador(DonadorDTO donadorDTO) {
         return donadoresYEntidadesClient.agregarDonador(donadorDTO).getBody();
     }
@@ -121,31 +122,10 @@ public class Fachada {
         return donadoresYEntidadesClient.modificarNecesidad(id, necesidadDTO).getBody();
     }
 
-    public ProductoDTO registrarProducto(ProductoDTO productoDTO) {
-        return donacionesClient.postProducto(productoDTO).getBody();
-    }
 
-    public String eliminarProducto(String id){
-        try {
-            donacionesClient.deleteProducto(id);
-            return "El producto con ID " + id + " fue eliminada correctamente.";
-        } catch (Exception e) {
-            return "No se pudo eliminar el producto con ID " + id + ".";
-        }
-    }
-
-    public ProductoDTO modificarProducto(ProductoDTO productoDTO){
-        return donacionesClient.putProducto(productoDTO.id(), productoDTO).getBody();
-    }
-
-    public ResponseEntity<?> buscarProducto(String id){
-        return donacionesClient.getProductoByID(id);
-    }
-
-    public ResponseEntity<List<ProductoDTO>> obtenerProductos(){
-        return donacionesClient.getProductos();
-    }
-
+    // ----------------------
+    // ----- Incentivos -----
+    // ----------------------
     public InsigniaDTO registrarInsignia(InsigniaDTO insignia) {
         return (InsigniaDTO) incentivosClient.postInsignia(insignia).getBody();
     }
@@ -172,6 +152,10 @@ public class Fachada {
         return incentivosClient.getInsignias();
     }
 
+    // ---------------------
+    // ----- Logistica -----
+    // ---------------------
+
     public Optional<PaqueteDTO> buscarPaquete(String id){
         return logisticaClient.buscarPaquete(id);
     }
@@ -179,6 +163,10 @@ public class Fachada {
     public List<PaqueteDTO> obtenerPaquetes(){
         return logisticaClient.getPaquetes();
     }
+
+    // ----------------------
+    // ----- Donaciones -----
+    // ----------------------
 
     public ResponseEntity<?> registrarDonacion(DonacionDTO donacionDTO) {
         return donacionesClient.postDonacion(donacionDTO);
@@ -206,5 +194,30 @@ public class Fachada {
 
     public ResponseEntity<?> registrarQuejaEnDonacion(String donacionID, String descripcion){
         return donacionesClient.registrarQuejaEnDonacion(donacionID, descripcion);
+    }
+
+    public ProductoDTO registrarProducto(ProductoDTO productoDTO) {
+        return donacionesClient.postProducto(productoDTO).getBody();
+    }
+
+    public String eliminarProducto(String id){
+        try {
+            donacionesClient.deleteProducto(id);
+            return "El producto con ID " + id + " fue eliminada correctamente.";
+        } catch (Exception e) {
+            return "No se pudo eliminar el producto con ID " + id + ".";
+        }
+    }
+
+    public ProductoDTO modificarProducto(ProductoDTO productoDTO){
+        return donacionesClient.putProducto(productoDTO.id(), productoDTO).getBody();
+    }
+
+    public ResponseEntity<?> buscarProducto(String id){
+        return donacionesClient.getProductoByID(id);
+    }
+
+    public ResponseEntity<List<ProductoDTO>> obtenerProductos(){
+        return donacionesClient.getProductos();
     }
 }
