@@ -2,6 +2,7 @@ package ar.edu.utn.dds.k3003.controllers;
 
 import ar.edu.utn.dds.k3003.Fachada;
 import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.DonacionDTO;
+import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.DonacionHistDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.CategoriaDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.IdentificadorDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.ProductoDTO;
@@ -20,6 +21,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.slf4j.MDC;
+
+
 
 
 
@@ -113,4 +116,56 @@ public class DonacionController {
         return fachada.obtenerProductos();
     }
     
+    // ----- ---------------- -----
+    // ----- De identificador -----
+    // ----- ---------------- -----
+
+    @PostMapping("/identificadores")
+    public ResponseEntity<IdentificadorDTO> registrarIdentificador(@RequestBody IdentificadorDTO identificadorDTO) {
+        return fachada.registrarIdentificador(identificadorDTO);
+    }
+    
+    @GetMapping("/identificadores")
+    public ResponseEntity<List<IdentificadorDTO>> obtenerIdentificadores() {
+        return fachada.obtenerIdentificadores();
+    }
+    
+    @DeleteMapping("/identificadores/{id}")
+    public ResponseEntity<String> eliminarIdentificador(@PathVariable("id") String identificadorID){
+        return ResponseEntity.ok(fachada.eliminarIdentificador(identificadorID));
+    }
+
+    // ----- ------------ -----
+    // ----- De categoria -----
+    // ----- ------------ -----
+
+    @PostMapping("/categorias")
+    public ResponseEntity<CategoriaDTO> registrarCategoria(@RequestBody CategoriaDTO categoriaDTO) {
+        return fachada.registrarCategoria(categoriaDTO);
+    }
+    
+    @GetMapping("/categorias")
+    public ResponseEntity<List<CategoriaDTO>> obtenerCategorias() {
+        return fachada.obtenerCategorias();
+    }
+    
+    @DeleteMapping("/categorias/{id}")
+    public ResponseEntity<String> eliminarCategoria(@PathVariable("id") String categoriaID){
+        return ResponseEntity.ok(fachada.eliminarCategoria(categoriaID));
+    }
+
+    // ----- ----------------- -----
+    // ----- De DonacionesHist -----
+    // ----- ----------------- -----
+
+    @GetMapping("/donacioneshist")
+    public ResponseEntity<List<DonacionHistDTO>> obtenerDonacionesHist() {
+        return fachada.obtenerDonacionesHist();
+    }
+
+    @GetMapping("/donacioneshist/{id}")
+    public ResponseEntity<List<DonacionHistDTO>> buscarDonacionesHist(@PathVariable("id") String donacionID) {
+        return fachada.buscarDonacionesHist(donacionID);
+    }
+
 }

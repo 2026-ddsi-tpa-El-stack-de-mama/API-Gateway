@@ -1,7 +1,10 @@
 package ar.edu.utn.dds.k3003;
 
+import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.CategoriaDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.DonacionDTO;
+import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.DonacionHistDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.EstadoDonacionEnum;
+import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.IdentificadorDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.ProductoDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.DonadorDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.DonadorStatsDTO;
@@ -168,6 +171,7 @@ public class Fachada {
     // ----- Donaciones -----
     // ----------------------
 
+    // ----- Donaciones
     public ResponseEntity<?> registrarDonacion(DonacionDTO donacionDTO) {
         return donacionesClient.postDonacion(donacionDTO);
     }
@@ -196,6 +200,7 @@ public class Fachada {
         return donacionesClient.registrarQuejaEnDonacion(donacionID, descripcion);
     }
 
+    // ----- Productos
     public ResponseEntity<?> registrarProducto(ProductoDTO productoDTO) {
         return donacionesClient.postProducto(productoDTO);
     }
@@ -219,5 +224,50 @@ public class Fachada {
 
     public ResponseEntity<List<ProductoDTO>> obtenerProductos(){
         return donacionesClient.getProductos();
+    }
+
+    // ----- Identificadores
+    public ResponseEntity<IdentificadorDTO> registrarIdentificador(IdentificadorDTO identificadorDTO){
+        return donacionesClient.postIdentificador(identificadorDTO);
+    }
+
+    public ResponseEntity<List<IdentificadorDTO>> obtenerIdentificadores(){
+        return donacionesClient.getIdentificadores();
+    }
+
+    public String eliminarIdentificador(String id){
+        try {
+            donacionesClient.deleteIdentificador(id);
+            return "El identificador con ID " + id + " fue eliminado correctamente.";
+        } catch (Exception e) {
+            return "No se pudo eliminar el identificador con ID " + id + ".";
+        }
+    }
+
+    // ----- Categorias
+    public ResponseEntity<CategoriaDTO> registrarCategoria(CategoriaDTO categoriaDTO){
+        return donacionesClient.postCategoria(categoriaDTO);
+    }
+
+    public ResponseEntity<List<CategoriaDTO>> obtenerCategorias(){
+        return donacionesClient.getCategorias();
+    }
+
+    public String eliminarCategoria(String id){
+        try {
+            donacionesClient.deleteCategoria(id);
+            return "La categoria con ID " + id + " fue eliminada correctamente.";
+        } catch (Exception e) {
+            return "No se pudo eliminar la categoria con ID " + id + ".";
+        }
+    }
+
+    // ----- DonacionesHist
+    public ResponseEntity<List<DonacionHistDTO>> obtenerDonacionesHist(){
+        return donacionesClient.getDonacionesHist();
+    }
+
+    public ResponseEntity<List<DonacionHistDTO>> buscarDonacionesHist(String donacionID){
+        return donacionesClient.getDonacionesHistPorID(donacionID);
     }
 }
