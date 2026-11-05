@@ -2,6 +2,9 @@ package ar.edu.utn.dds.k3003.controllers;
 
 import ar.edu.utn.dds.k3003.Fachada;
 import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.DonacionDTO;
+import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.CategoriaDTO;
+import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.IdentificadorDTO;
+import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.ProductoDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.EstadoDonacionEnum;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.slf4j.MDC;
+
+
 
 
 
@@ -40,12 +45,11 @@ public class DonacionController {
         
     }
 
-    // Versión nueva de getDonacionByID
     @GetMapping("/donaciones/{id}")
 	public ResponseEntity<?> getDonacionById(@PathVariable("id") String donacionID) {
         return this.fachada.buscarDonacion(donacionID);
 	}
-    //Agregado
+    
     @GetMapping("/donaciones")
     public ResponseEntity<?> getDonaciones(){
         return this.fachada.obtenerDonaciones();
@@ -71,12 +75,42 @@ public class DonacionController {
         return fachada.cambiarEstadoDeDonacion(donacionID, estado);  
     }
 
-    //Versión nueva de registrarQuejaEnDonacion
     @PostMapping("/donaciones/{id}/queja")
     public ResponseEntity<?> registrarQuejaEnDonacion(
             @PathVariable("id") String donacionID, 
             @RequestBody String descripcion){
             return fachada.registrarQuejaEnDonacion(donacionID,descripcion);
+    }
+    
+    // ----- ------------- -----
+    // ----- De productos -----
+    // ----- ------------- -----
+
+    @PostMapping("/productos")
+    public ResponseEntity<?> registrarProducto(@RequestBody ProductoDTO productoDTO) {
+        return fachada.registrarProducto(productoDTO);
+    }
+
+    @DeleteMapping ("/productos/{id}")
+    public ResponseEntity<String> eliminarProducto(@PathVariable("id") String productoID){
+        return ResponseEntity.ok(this.fachada.eliminarProducto(productoID));
+    }
+
+    @PutMapping("/productos/{id}")
+    public ResponseEntity<ProductoDTO> modificarProducto(
+            @PathVariable("id") String productoID,
+            @RequestBody ProductoDTO nuevoProductoDTO) {
+        return fachada.modificarProducto(nuevoProductoDTO, productoID);
+    }
+    
+    @GetMapping("/productos/{id}")
+    public ResponseEntity<?> buscarProducto(String id){
+        return fachada.buscarProducto(id);
+    }
+
+    @GetMapping("/productos")
+    public ResponseEntity<List <ProductoDTO>> obtenerProductos() {
+        return fachada.obtenerProductos();
     }
     
 }

@@ -196,21 +196,21 @@ public class Fachada {
         return donacionesClient.registrarQuejaEnDonacion(donacionID, descripcion);
     }
 
-    public ProductoDTO registrarProducto(ProductoDTO productoDTO) {
-        return donacionesClient.postProducto(productoDTO).getBody();
+    public ResponseEntity<?> registrarProducto(ProductoDTO productoDTO) {
+        return donacionesClient.postProducto(productoDTO);
     }
 
     public String eliminarProducto(String id){
         try {
             donacionesClient.deleteProducto(id);
-            return "El producto con ID " + id + " fue eliminada correctamente.";
+            return "El producto con ID " + id + " fue eliminado correctamente.";
         } catch (Exception e) {
             return "No se pudo eliminar el producto con ID " + id + ".";
         }
     }
 
-    public ProductoDTO modificarProducto(ProductoDTO productoDTO){
-        return donacionesClient.putProducto(productoDTO.id(), productoDTO).getBody();
+    public ResponseEntity<ProductoDTO> modificarProducto(ProductoDTO productoDTO, String productoID){
+        return donacionesClient.putProducto(productoID, productoDTO);
     }
 
     public ResponseEntity<?> buscarProducto(String id){

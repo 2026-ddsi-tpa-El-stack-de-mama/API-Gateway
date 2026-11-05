@@ -37,7 +37,7 @@ public interface DonacionesClient {
             @RequestBody String descripcion);
 
     @PostMapping("/productos")
-    public ResponseEntity<ProductoDTO> postProducto(@RequestBody ProductoDTO productoDTO);
+    public ResponseEntity<?> postProducto(@RequestBody ProductoDTO productoDTO);
 
     @GetMapping("/productos/{id}")
     public ResponseEntity<?> getProductoByID(@PathVariable("id") String productoID);
