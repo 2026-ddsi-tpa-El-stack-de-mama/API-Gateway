@@ -21,8 +21,12 @@ public interface IncentivosClient {
     public ResponseEntity<?> deleteInsignia(@PathVariable("id") String insigniaID);
 
     @GetMapping("/insignias")
-    public InsigniasResponse getInsignias();
+    public ResponseEntity<List<InsigniaDTO>> getInsignias();
 
     @GetMapping("/insignias/{id}")
     public ResponseEntity<?> getInsigniaById(@PathVariable("id") String insigniaID);
+
+    // Faltan:
+    // asignarInsigniaADonador
+    // getInsigniasDeDonador
 }

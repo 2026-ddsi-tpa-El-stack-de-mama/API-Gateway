@@ -115,7 +115,7 @@ public class Fachada {
         return donadoresYEntidadesClient.registrarNecesidad(necesidadDTO);
     }
 
-    public List<NecesidadMaterialDTO> obtenerNecesidadesInsatisfechasDe(String productoID){
+    public ResponseEntity<List<NecesidadMaterialDTO>> obtenerNecesidadesInsatisfechasDe(String productoID){
         return donadoresYEntidadesClient.obtenerNecesidadesInsatisfechasDe(productoID);
     }
 
@@ -133,18 +133,15 @@ public class Fachada {
     }
 
     public ResponseEntity<?> satisfacerNecesidad(String necesidadID, Integer cantidad){
-        try{
-            return ResponseEntity.ok(donadoresYEntidadesClient.satisfacerNecesidad(necesidadID, cantidad));
-        }catch(RuntimeException ex){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-        }
+        return donadoresYEntidadesClient.satisfacerNecesidad(necesidadID, cantidad);
     } 
     // ----------------------
     // ----- Incentivos -----
     // ----------------------
-    /*
-    public ResponseEntity<InsigniaDTO> registrarInsignia(InsigniaDTO insignia) {
-        return (InsigniaDTO) incentivosClient.postInsignia(insignia);
+    
+    // ----- Insignias
+    public ResponseEntity<?> registrarInsignia(InsigniaDTO insignia) {
+        return incentivosClient.postInsignia(insignia);
     }
 
     public String eliminarInsignia(String id){
@@ -157,18 +154,20 @@ public class Fachada {
         }
     }
 
-    public ResponseEntity<InsigniaDTO> modificarInsignia(InsigniaDTO insignia){
-        return (InsigniaDTO) incentivosClient.putInsignia(insignia.id(), insignia);
+    public ResponseEntity<?> modificarInsignia(String insigniaID,InsigniaDTO insigniaDTO){
+        return incentivosClient.putInsignia(insigniaID, insigniaDTO);
     }
 
     public ResponseEntity<?> buscarInsignia(String id){
         return incentivosClient.getInsigniaById(id);
     }
 
-    public InsigniasResponse obtenerInsignias(){
+    // Antes el tipo que devolvia era InsigniasResponse
+    public ResponseEntity<List<InsigniaDTO>> obtenerInsignias(){
         return incentivosClient.getInsignias();
     }
 
+    /*
     // ---------------------
     // ----- Logistica -----
     // ---------------------

@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// Los que en el modulo original no estaban como ResponseEntity son:
+// agregarQueja
+// obtenerHistorialEstado
 @FeignClient(name = "donadoresYEntidades", url = "${FACHADA_DYE}")
 public interface DonadoresYEntidadesClient {
 
@@ -28,12 +31,12 @@ public interface DonadoresYEntidadesClient {
     // Antes no era public  // -- Es "De" un producto, no trae todas las necesidades instisfechas
     // Cuidado que no es ResponseEntity
     @GetMapping("/necesidades/insatisfechas")
-    public List<NecesidadMaterialDTO> obtenerNecesidadesInsatisfechasDe(@RequestParam String productoId);
+    public ResponseEntity<List<NecesidadMaterialDTO>> obtenerNecesidadesInsatisfechasDe(@RequestParam String productoId);
 
     // Antes no era public ni tenía la primera "/"
-    // Cuidado que no es un ResponseEntity
+    // Antes no estaba puesto como response entity
     @PostMapping("/necesidades/{necesidadID}/satisfaccion")
-    public NecesidadMaterialDTO satisfacerNecesidad(@PathVariable String necesidadID, @RequestParam Integer cantidad);
+    public ResponseEntity<NecesidadMaterialDTO> satisfacerNecesidad(@PathVariable String necesidadID, @RequestParam Integer cantidad);
 
     @GetMapping("/necesidades/{necesidadID}")
     public ResponseEntity<NecesidadMaterialDTO> obtenerNecesidad(@PathVariable String necesidadID);
@@ -79,4 +82,6 @@ public interface DonadoresYEntidadesClient {
     @GetMapping("/entidades/{id}")
     public ResponseEntity<EntidadBeneficaDTO> buscarEntidad(@PathVariable String id);
 
+    // No le pongo el endpoint para "Restaurar la base" que tiene agregado DyE, 
+    // porque es solo para desarrollo
 }

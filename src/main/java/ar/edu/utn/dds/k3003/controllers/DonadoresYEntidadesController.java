@@ -14,7 +14,9 @@ import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.NecesidadMaterialDT
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.QuejaDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.HistorialEstadoDonadorDTO;
 
-@RestController
+// Los que en el modulo original no estaban como ResponseEntity son:
+// agregarQueja
+// obtenerHistorialEstado@RestController
 @RequestMapping("/donadoresyentidades")
 public class DonadoresYEntidadesController {
     private final Fachada fachada;
@@ -125,11 +127,12 @@ public class DonadoresYEntidadesController {
 
     @GetMapping("/necesidades/insatisfechas")
     public ResponseEntity<?> obtenerNecesidadesInsatisfechasDe(@RequestParam String productoId){
-        try{
-            return ResponseEntity.ok(fachada.obtenerNecesidadesInsatisfechasDe(productoId));
-        }catch(RuntimeException ex){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-        }
+        return fachada.obtenerNecesidadesInsatisfechasDe(productoId);
+        //try{
+        //    return ResponseEntity.ok(fachada.obtenerNecesidadesInsatisfechasDe(productoId));
+        //}catch(RuntimeException ex){
+        //    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        //}
     }
 
     @DeleteMapping("/necesidades/{necesidadID}")
