@@ -13,6 +13,9 @@ import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.HistorialEstadoDona
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.NecesidadMaterialDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.QuejaDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.incentivos.InsigniaDTO;
+import ar.edu.utn.dds.k3003.catedra.dtos.incentivos.MisionDTO;
+import ar.edu.utn.dds.k3003.catedra.dtos.incentivos.CambioCategoriaDTO;
+import ar.edu.utn.dds.k3003.catedra.dtos.incentivos.CambioCategoriaRequest;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.PaqueteDTO;
 import ar.edu.utn.dds.k3003.clientes.DonacionesClient;
 import ar.edu.utn.dds.k3003.clientes.DonadoresYEntidadesClient;
@@ -24,9 +27,6 @@ import ar.edu.utn.dds.k3003.dtosBot.InsigniasResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -167,6 +167,59 @@ public class Fachada {
         return incentivosClient.getInsignias();
     }
 
+    public ResponseEntity<?> asignarInsigniaADonador(String insigniaID, String donadorID){
+        return incentivosClient.asignarInsigniaADonador(insigniaID, donadorID);
+    }
+
+    public ResponseEntity<?> getInsigniasDeDonador(String donadorID){
+        return incentivosClient.getInsigniasDeDonador(donadorID);
+    }
+
+    // Donadores (Desde Incentivos)
+    public ResponseEntity<?> registrarCambioCategoria(String donadorID, CambioCategoriaRequest request){
+        return incentivosClient.registrarCambioCategoria(donadorID,request);
+    }
+
+    public ResponseEntity<List<CambioCategoriaDTO>> historialCategorias(String donadorID){
+        return incentivosClient.historialCategorias(donadorID);
+    }
+
+    // Misiones
+    public ResponseEntity<?> registrarMision( MisionDTO misionDTO){
+        return incentivosClient.postMision(misionDTO);
+    }
+
+    public ResponseEntity<?> modificarMision(String misionID, MisionDTO misionDTO){
+        return incentivosClient.putMision(misionID,misionDTO);
+    }
+
+    public ResponseEntity<?> eliminarMision( String misionID){
+        return incentivosClient.deleteMision(misionID);
+    }
+
+    public ResponseEntity<List<MisionDTO>> obtenerMisiones(){
+        return incentivosClient.getMisiones();
+    }
+
+    public ResponseEntity<?> buscarMision(String misionID){
+        return incentivosClient.getMisionById(misionID);
+    }
+
+    public ResponseEntity<?> asignarMisionADonador(String misionID,String donadorID){
+        return asignarMisionADonador(misionID, donadorID);
+      }
+
+    public ResponseEntity<?> getMisionEnCursoDeDonador( String donadorID){
+        return getMisionEnCursoDeDonador(donadorID);
+    }
+
+    public ResponseEntity<?> procesarDonador( String donadorID){
+        return procesarDonador(donadorID);
+    }
+
+    public ResponseEntity<?> historialMisiones( String donadorID){
+        return historialMisiones(donadorID);
+    }
     /*
     // ---------------------
     // ----- Logistica -----
