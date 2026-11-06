@@ -59,7 +59,7 @@ public class DonacionController {
         try{
             return this.fachada.buscarDonacion(donacionID);
         } catch(RuntimeException ex){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage() + "\n Y la causa es: " + ex.getCause());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage() + "\n Y la causa es: " + ex.getCause()+ "\n Y la suprimida es: " +ex.getSuppressed());
         }
 	}
     
