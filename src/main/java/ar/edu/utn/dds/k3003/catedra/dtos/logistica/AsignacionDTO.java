@@ -7,4 +7,4 @@ public record AsignacionDTO(
     String paqueteID,
     String necesidadID,
     LocalDateTime fecha,
-    EstadoAsginacionEnum estado) {}
+    EstadoAsignacionEnum estado) {}
