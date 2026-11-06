@@ -16,6 +16,8 @@ import ar.edu.utn.dds.k3003.catedra.dtos.incentivos.InsigniaDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.incentivos.MisionDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.incentivos.CambioCategoriaDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.incentivos.CambioCategoriaRequest;
+import ar.edu.utn.dds.k3003.catedra.dtos.logistica.AsignacionDTO;
+import ar.edu.utn.dds.k3003.catedra.dtos.logistica.AsignacionDirecta;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.PaqueteDTO;
 import ar.edu.utn.dds.k3003.clientes.DonacionesClient;
 import ar.edu.utn.dds.k3003.clientes.DonadoresYEntidadesClient;
@@ -24,12 +26,17 @@ import ar.edu.utn.dds.k3003.clientes.IncentivosClient;
 import ar.edu.utn.dds.k3003.clientes.LogisticaClient;
 import ar.edu.utn.dds.k3003.dtosBot.InsigniasResponse;
 import ar.edu.utn.dds.k3003.model.Asignacion;
+import ar.edu.utn.dds.k3003.model.AsignacionesHistorial;
+import ar.edu.utn.dds.k3003.model.Deposito;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -218,7 +225,6 @@ public class Fachada {
     // ----- Logistica -----
     // ---------------------
     
-    // Prueba
     public Asignacion getAsignacion( String id){
         return logisticaClient.getAsignacion(id);
     }
@@ -226,15 +232,61 @@ public class Fachada {
     public List<Asignacion> getAsignaciones() {
         return logisticaClient.getAsignaciones();
     }
-    /*
+
+    public List<AsignacionesHistorial> getAsignacionesHistorial(){
+        return logisticaClient.getAsignacionesHistorial();
+    }
+
+    public AsignacionDTO crearAsignacion( AsignacionDirecta asignacionDirecta){
+        return logisticaClient.crearAsignacion(asignacionDirecta);
+    }
+
+    public Asignacion postAsignacionesDirecta( AsignacionDirecta asignacionDirecta){
+        return logisticaClient.postAsignacionesDirecta(asignacionDirecta);
+    }
+    
     public Optional<PaqueteDTO> buscarPaquete(String id){
         return logisticaClient.buscarPaquete(id);
     }
 
-    public ResponseEntity<List<PaqueteDTO>> obtenerPaquetes(){
+    public List<PaqueteDTO> obtenerPaquetes(){
         return logisticaClient.getPaquetes();
     }
-    */
+
+    // Deposito
+    public Deposito getDeposito(@PathVariable String id){
+        return logisticaClient.getDeposito(id);
+    }
+
+    public ResponseEntity<String> deleteDeposito(@PathVariable String id) {
+        return logisticaClient.deleteDeposito(id);
+    }
+
+    public List<Deposito> getDepositos(){
+        return logisticaClient.getDepositos();
+    }
+
+    public Deposito postDeposito(@RequestBody Deposito deposito) {
+        return logisticaClient.postDeposito(deposito);
+    }
+
+    public String postDonacion(@PathVariable String id, @RequestBody PaqueteDTO paquete){
+        return logisticaClient.postDonacion(id, paquete);
+    }
+
+    public String postEntrega(@RequestBody PaqueteDTO paquete){
+        return logisticaClient.postEntrega(paquete);
+    }
+
+    public String getStock(@PathVariable String productoID){return logisticaClient.getStock(productoID);}
+
+    public Integer postStock(@PathVariable String productoID, @RequestBody Integer cantidad){
+        return logisticaClient.postStock(productoID, cantidad);
+    }
+
+
+
+    
     // ----------------------
     // ----- Donaciones -----
     // ----------------------
