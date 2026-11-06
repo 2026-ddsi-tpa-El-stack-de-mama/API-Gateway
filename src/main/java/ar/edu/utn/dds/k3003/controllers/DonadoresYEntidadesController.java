@@ -23,9 +23,9 @@ public class DonadoresYEntidadesController {
         this.fachada = fachada;
     }
 
-    // ----- ------------- -----
+    // ----- ------------ -----
     // ----- De Donadores -----
-    // ----- ------------- -----
+    // ----- ------------ -----
 
     @PostMapping("/donadores")
     public ResponseEntity<DonadorDTO> registrarDonador(@RequestBody DonadorDTO donadorDTO){
@@ -82,5 +82,69 @@ public class DonadoresYEntidadesController {
         }
     }
 
+    // ----- ------------ -----
+    // ----- De Entidades -----
+    // ----- ------------ -----
+    @PostMapping("/entidades")
+    public ResponseEntity<EntidadBeneficaDTO> agregarEntidad(@RequestBody EntidadBeneficaDTO entidadDTO){
+        return fachada.registrarEntidad(entidadDTO);
+    }
+
+    @PutMapping("/entidades/{id}")
+    public ResponseEntity<EntidadBeneficaDTO> modificarEntidad(@PathVariable String id, @RequestBody EntidadBeneficaDTO entidadDTO){
+        return fachada.modificarEntidad(id, entidadDTO);
+    }
+
+    @GetMapping("/entidades")
+    public ResponseEntity<List<EntidadBeneficaDTO>> obtenerEntidades(){
+        return fachada.obtenerEntidades();
+    }
+
+    @GetMapping("/entidades/{id}")
+    public ResponseEntity<EntidadBeneficaDTO> buscarEntidad(@PathVariable String id){
+        return fachada.buscarEntidad(id);
+    }
     
+    // ----- -------------- -----
+    // ----- De Necesidades -----
+    // ----- -------------- -----
+    @PostMapping("/necesidades")
+    public ResponseEntity<NecesidadMaterialDTO> registrarNecesidad(@RequestBody NecesidadMaterialDTO necesidadDTO){
+        return fachada.registrarNecesidad(necesidadDTO);
+    }
+
+    @GetMapping("/necesidades")
+    public ResponseEntity<List<NecesidadMaterialDTO>> obtenerNecesidades(){
+        return fachada.obtenerNecesidades();
+    }
+
+    @GetMapping("/necesidades/{necesidadID}")
+    public ResponseEntity<NecesidadMaterialDTO> obtenerNecesidad(@PathVariable String necesidadID){
+        return fachada.buscarNecesidad(necesidadID);
+    }
+
+    @GetMapping("/necesidades/insatisfechas")
+    public ResponseEntity<?> obtenerNecesidadesInsatisfechasDe(@RequestParam String productoId){
+        try{
+            return ResponseEntity.ok(fachada.obtenerNecesidadesInsatisfechasDe(productoId));
+        }catch(RuntimeException ex){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+    }
+
+    @DeleteMapping("/necesidades/{necesidadID}")
+    public ResponseEntity<String> eliminarNecesidad(@PathVariable String necesidadID){
+        return ResponseEntity.ok(fachada.eliminarNecesidad(necesidadID));
+    }
+
+    @PutMapping("/necesidades/{necesidadID}")
+    public ResponseEntity<NecesidadMaterialDTO> modificarNecesidad(@PathVariable String necesidadID, @RequestBody NecesidadMaterialDTO necesidadDTO){
+        return fachada.modificarNecesidad(necesidadID, necesidadDTO);
+    }
+
+    @PostMapping("/necesidades/{necesidadID}/satisfaccion")
+    public ResponseEntity<?> satisfacerNecesidad(@PathVariable String necesidadID, @RequestParam Integer cantidad){
+        return fachada.satisfacerNecesidad(necesidadID, cantidad);
+    }
+
 }

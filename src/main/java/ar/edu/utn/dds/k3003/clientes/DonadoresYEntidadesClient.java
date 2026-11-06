@@ -26,6 +26,7 @@ public interface DonadoresYEntidadesClient {
     public ResponseEntity<NecesidadMaterialDTO> modificarNecesidad(@PathVariable String necesidadID, @RequestBody NecesidadMaterialDTO necesidadDTO);
 
     // Antes no era public  // -- Es "De" un producto, no trae todas las necesidades instisfechas
+    // Cuidado que no es ResponseEntity
     @GetMapping("/necesidades/insatisfechas")
     public List<NecesidadMaterialDTO> obtenerNecesidadesInsatisfechasDe(@RequestParam String productoId);
 

@@ -20,6 +20,8 @@ import ar.edu.utn.dds.k3003.clientes.DonadoresYEntidadesClient;
 import ar.edu.utn.dds.k3003.clientes.IncentivosClient;
 import ar.edu.utn.dds.k3003.clientes.LogisticaClient;
 import ar.edu.utn.dds.k3003.dtosBot.InsigniasResponse;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -102,7 +104,7 @@ public class Fachada {
 
 
     // ----- Necesidad
-    public ResponseEntity<NecesidadMaterialDTO> obtenerNecesidad(String id) {
+    public ResponseEntity<NecesidadMaterialDTO> buscarNecesidad(String id) {
         return donadoresYEntidadesClient.obtenerNecesidad(id);
     }
 
@@ -111,6 +113,10 @@ public class Fachada {
     }
     public ResponseEntity<NecesidadMaterialDTO> registrarNecesidad(NecesidadMaterialDTO necesidadDTO) {
         return donadoresYEntidadesClient.registrarNecesidad(necesidadDTO);
+    }
+
+    public List<NecesidadMaterialDTO> obtenerNecesidadesInsatisfechasDe(String productoID){
+        return donadoresYEntidadesClient.obtenerNecesidadesInsatisfechasDe(productoID);
     }
 
     public String eliminarNecesidad(String id) {
@@ -126,7 +132,13 @@ public class Fachada {
         return donadoresYEntidadesClient.modificarNecesidad(id, necesidadDTO);
     }
 
-
+    public ResponseEntity<?> satisfacerNecesidad(String necesidadID, Integer cantidad){
+        try{
+            return ResponseEntity.ok(donadoresYEntidadesClient.satisfacerNecesidad(necesidadID, cantidad));
+        }catch(RuntimeException ex){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+    } 
     // ----------------------
     // ----- Incentivos -----
     // ----------------------
