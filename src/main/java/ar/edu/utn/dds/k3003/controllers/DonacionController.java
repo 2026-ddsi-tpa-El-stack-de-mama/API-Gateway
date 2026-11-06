@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 //import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ar.edu.utn.dds.k3003.exceptions.ManejoDeExcepciones;
 
 //
 //import ar.edu.utn.dds.k3003.services.DonacionService;
@@ -27,9 +28,11 @@ import org.slf4j.MDC;
 public class DonacionController {
 
     private final Fachada fachada;
+    private final ManejoDeExcepciones mdExcepciones;
 
-    public DonacionController(Fachada fachada) {
+    public DonacionController(Fachada fachada, ManejoDeExcepciones mdExcepciones) {
         this.fachada = fachada;
+        this.mdExcepciones= mdExcepciones;
     }
     // ----- ------------- -----
     // ----- De donaciones -----
@@ -43,7 +46,11 @@ public class DonacionController {
 
     @GetMapping("/donaciones/{id}")
 	public ResponseEntity<?> getDonacionById(@PathVariable("id") String donacionID) {
-        return this.fachada.buscarDonacion(donacionID);
+        try{
+            return this.fachada.buscarDonacion(donacionID);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
 	}
     
     @GetMapping("/donaciones")
