@@ -2,17 +2,18 @@ package ar.edu.utn.dds.k3003.controllers;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import ar.edu.utn.dds.k3003.Fachada;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.AsignacionDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.AsignacionDirecta;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.PaqueteDTO;
 import ar.edu.utn.dds.k3003.model.*;
 
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/logistica")
 public class LogisticaController {
     private final Fachada fachada;
     
@@ -24,6 +25,11 @@ public class LogisticaController {
     @GetMapping("/asignaciones/{id}")
     public Asignacion getAsignacion(@PathVariable String id){
         return fachada.getAsignacion(id);
+    }
+
+    @GetMapping("/asignaciones")
+    public List<Asignacion> getAsignaciones() {
+        return fachada.getAsignaciones();
     }
 
     /*
@@ -52,9 +58,6 @@ public class LogisticaController {
         return fachada.postAsignacionesDirecta(asignacionDirecta);
     }
 
-    @GetMapping("/asignaciones")
-    public List<Asignacion> getAsignaciones() {
-        return fachada.getAsignaciones();
-    }
+    
          */
 }

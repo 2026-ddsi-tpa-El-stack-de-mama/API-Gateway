@@ -16,6 +16,8 @@ public interface LogisticaClient {
     @GetMapping("/asignaciones/{id}")
     public Asignacion getAsignacion(@PathVariable String id);
 
+    @GetMapping("/asignaciones")
+    public List<Asignacion> getAsignaciones() ;
 
 
 

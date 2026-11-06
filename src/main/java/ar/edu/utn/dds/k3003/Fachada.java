@@ -233,6 +233,9 @@ public class Fachada {
         return logisticaClient.getAsignacion(id);
     }
     
+    public List<Asignacion> getAsignaciones() {
+        return logisticaClient.getAsignaciones();
+    }
     /*
     public Optional<PaqueteDTO> buscarPaquete(String id){
         return logisticaClient.buscarPaquete(id);

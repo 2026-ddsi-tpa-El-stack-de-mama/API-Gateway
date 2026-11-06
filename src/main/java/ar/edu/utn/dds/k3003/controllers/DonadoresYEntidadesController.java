@@ -16,7 +16,8 @@ import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.HistorialEstadoDona
 
 // Los que en el modulo original no estaban como ResponseEntity son:
 // agregarQueja
-// obtenerHistorialEstado@RestController
+// obtenerHistorialEstado
+@RestController
 @RequestMapping("/donadoresyentidades")
 public class DonadoresYEntidadesController {
     private final Fachada fachada;
