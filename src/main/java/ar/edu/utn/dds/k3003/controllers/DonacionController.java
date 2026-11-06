@@ -22,13 +22,6 @@ import java.util.List;
 
 import org.slf4j.MDC;
 
-
-
-
-
-
-
-
 @RestController
 @RequestMapping("/donaciones")
 public class DonacionController {

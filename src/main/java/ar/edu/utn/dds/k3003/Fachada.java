@@ -9,7 +9,9 @@ import ar.edu.utn.dds.k3003.catedra.dtos.donaciones.ProductoDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.DonadorDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.DonadorStatsDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.EntidadBeneficaDTO;
+import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.HistorialEstadoDonadorDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.NecesidadMaterialDTO;
+import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.QuejaDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.incentivos.InsigniaDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.PaqueteDTO;
 import ar.edu.utn.dds.k3003.clientes.DonacionesClient;
@@ -20,6 +22,9 @@ import ar.edu.utn.dds.k3003.clientes.LogisticaClient;
 import ar.edu.utn.dds.k3003.dtosBot.InsigniasResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -43,73 +48,69 @@ public class Fachada {
     // ---------------------------------
     // ----- Donadores y Entidades -----
     // ---------------------------------
-    public DonadorDTO registrarDonador(DonadorDTO donadorDTO) {
-        return donadoresYEntidadesClient.agregarDonador(donadorDTO).getBody();
+
+    // ----- Donador
+    public ResponseEntity<DonadorDTO> registrarDonador(DonadorDTO donadorDTO) {
+        return donadoresYEntidadesClient.agregarDonador(donadorDTO);
     }
 
-    public String obtenerEstadisticasDonador(String id) {
-        try {
-
-            DonadorStatsDTO estadisticas = donadoresYEntidadesClient.estadisticas(id).getBody();
-
-            if (estadisticas == null) {
-                return "No se encontraron estadísticas para el donador con ID " + id;
-            }
-
-            String insignias = estadisticas.insigniasID() != null
-                    && !estadisticas.insigniasID().isEmpty()
-                    ? String.join(", ", estadisticas.insigniasID())
-                    : "Sin insignias";
-
-            String mision = estadisticas.misionActualID() != null
-                    ? estadisticas.misionActualID()
-                    : "Sin misión activa";
-
-            return "Estadísticas del donador\n\n"
-                    + "ID: " + estadisticas.id() + "\n"
-                    + "Nombre: " + estadisticas.nombre() + " "
-                    + estadisticas.apellido() + "\n"
-                    + "Edad: " + estadisticas.edad() + " años\n"
-                    + "Estado: " + estadisticas.estado() + "\n"
-                    + "Categoría: " + estadisticas.categoria() + "\n"
-                    + "Misión actual: " + mision + "\n"
-                    + "Insignias: " + insignias;
-
-        } catch (NumberFormatException e) {
-            return "El ID del donador no es válido.";
-        }
+    public ResponseEntity<DonadorStatsDTO> obtenerEstadisticasDonador(String id) {
+       return donadoresYEntidadesClient.estadisticas(id);
     }
 
-    public DonadorDTO buscarDonador(String id) {
-        return donadoresYEntidadesClient.buscarDonador(id).getBody();
+    public ResponseEntity<DonadorDTO> buscarDonador(String id) {
+        return donadoresYEntidadesClient.buscarDonador(id);
     }
 
-    public List<DonadorDTO> obtenerDonadores() {
-        return donadoresYEntidadesClient.obtenerDonadores().getBody();
+    public ResponseEntity<List<DonadorDTO>> obtenerDonadores() {
+        return donadoresYEntidadesClient.obtenerDonadores();
     }
 
-    public EntidadBeneficaDTO registrarEntidad(EntidadBeneficaDTO entidadDTO) {
-        return donadoresYEntidadesClient.agregarEntidad(entidadDTO).getBody();
+    public ResponseEntity<Boolean> puedeDonar(String id){
+        return donadoresYEntidadesClient.puedeDonar(id);
     }
 
-    public EntidadBeneficaDTO modificarEntidad(String id, EntidadBeneficaDTO entidadDTO) {
-        return donadoresYEntidadesClient.modificarEntidad(id, entidadDTO).getBody();
+
+    public QuejaDTO registrarQueja(String id, QuejaDTO quejaDTO){
+        return donadoresYEntidadesClient.agregarQueja(id, quejaDTO);
     }
 
-    public List<EntidadBeneficaDTO> obtenerEntidades() {
-        return donadoresYEntidadesClient.obtenerEntidades().getBody();
+    public ResponseEntity<List<QuejaDTO>> obtenerQuejas(String id){
+        return donadoresYEntidadesClient.obtenerQuejas(id);
     }
 
-    public EntidadBeneficaDTO buscarEntidad(String id) {
-        return donadoresYEntidadesClient.buscarEntidad(id).getBody();
+    public List<HistorialEstadoDonadorDTO> obtenerHistorialEstado(String id){
+        return donadoresYEntidadesClient.obtenerHistorialEstado(id);
     }
 
-    public NecesidadMaterialDTO obtenerNecesidad(String id) {
-        return donadoresYEntidadesClient.obtenerNecesidad(id).getBody();
+    // ----- Entidad
+    public ResponseEntity<EntidadBeneficaDTO> registrarEntidad(EntidadBeneficaDTO entidadDTO) {
+        return donadoresYEntidadesClient.agregarEntidad(entidadDTO);
     }
 
-    public NecesidadMaterialDTO registrarNecesidad(NecesidadMaterialDTO necesidadDTO) {
-        return donadoresYEntidadesClient.registrarNecesidad(necesidadDTO).getBody();
+    public ResponseEntity<EntidadBeneficaDTO> modificarEntidad(String id, EntidadBeneficaDTO entidadDTO) {
+        return donadoresYEntidadesClient.modificarEntidad(id, entidadDTO);
+    }
+
+    public ResponseEntity<List<EntidadBeneficaDTO>> obtenerEntidades() {
+        return donadoresYEntidadesClient.obtenerEntidades();
+    }
+
+    public ResponseEntity<EntidadBeneficaDTO> buscarEntidad(String id) {
+        return donadoresYEntidadesClient.buscarEntidad(id);
+    }
+
+
+    // ----- Necesidad
+    public ResponseEntity<NecesidadMaterialDTO> obtenerNecesidad(String id) {
+        return donadoresYEntidadesClient.obtenerNecesidad(id);
+    }
+
+    public ResponseEntity<List<NecesidadMaterialDTO>> obtenerNecesidades() {
+        return donadoresYEntidadesClient.obtenerNecesidades();
+    }
+    public ResponseEntity<NecesidadMaterialDTO> registrarNecesidad(NecesidadMaterialDTO necesidadDTO) {
+        return donadoresYEntidadesClient.registrarNecesidad(necesidadDTO);
     }
 
     public String eliminarNecesidad(String id) {
@@ -121,16 +122,17 @@ public class Fachada {
         }
     }
 
-    public NecesidadMaterialDTO modificarNecesidad(String id, NecesidadMaterialDTO necesidadDTO) {
-        return donadoresYEntidadesClient.modificarNecesidad(id, necesidadDTO).getBody();
+    public ResponseEntity<NecesidadMaterialDTO> modificarNecesidad(String id, NecesidadMaterialDTO necesidadDTO) {
+        return donadoresYEntidadesClient.modificarNecesidad(id, necesidadDTO);
     }
 
 
     // ----------------------
     // ----- Incentivos -----
     // ----------------------
-    public InsigniaDTO registrarInsignia(InsigniaDTO insignia) {
-        return (InsigniaDTO) incentivosClient.postInsignia(insignia).getBody();
+    /*
+    public ResponseEntity<InsigniaDTO> registrarInsignia(InsigniaDTO insignia) {
+        return (InsigniaDTO) incentivosClient.postInsignia(insignia);
     }
 
     public String eliminarInsignia(String id){
@@ -143,8 +145,8 @@ public class Fachada {
         }
     }
 
-    public InsigniaDTO modificarInsignia(InsigniaDTO insignia){
-        return (InsigniaDTO) incentivosClient.putInsignia(insignia.id(), insignia).getBody();
+    public ResponseEntity<InsigniaDTO> modificarInsignia(InsigniaDTO insignia){
+        return (InsigniaDTO) incentivosClient.putInsignia(insignia.id(), insignia);
     }
 
     public ResponseEntity<?> buscarInsignia(String id){
@@ -163,10 +165,10 @@ public class Fachada {
         return logisticaClient.buscarPaquete(id);
     }
 
-    public List<PaqueteDTO> obtenerPaquetes(){
+    public ResponseEntity<List<PaqueteDTO>> obtenerPaquetes(){
         return logisticaClient.getPaquetes();
     }
-
+    */
     // ----------------------
     // ----- Donaciones -----
     // ----------------------
