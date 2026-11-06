@@ -19,6 +19,9 @@ import ar.edu.utn.dds.k3003.catedra.dtos.incentivos.CambioCategoriaRequest;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.AsignacionDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.AsignacionDirecta;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.PaqueteDTO;
+import ar.edu.utn.dds.k3003.clases.EstadoDepositos;
+import ar.edu.utn.dds.k3003.clases.FichaIntegralDonador;
+import ar.edu.utn.dds.k3003.clientes.ConsultasClient;
 import ar.edu.utn.dds.k3003.clientes.DonacionesClient;
 import ar.edu.utn.dds.k3003.clientes.DonadoresYEntidadesClient;
 
@@ -49,12 +52,15 @@ public class Fachada {
     private final DonacionesClient donacionesClient;
     private final IncentivosClient incentivosClient;
     private final LogisticaClient logisticaClient;
+    private final ConsultasClient consultasClient;
 
-    public Fachada(DonadoresYEntidadesClient donadoresYEntidadesClient, DonacionesClient donacionesClient, IncentivosClient incentivosClient, LogisticaClient logisticaClient) {
+    public Fachada(DonadoresYEntidadesClient donadoresYEntidadesClient, DonacionesClient donacionesClient, IncentivosClient incentivosClient, LogisticaClient logisticaClient, ConsultasClient consultasClient) {
         this.donadoresYEntidadesClient = donadoresYEntidadesClient;
         this.donacionesClient = donacionesClient;
         this.incentivosClient = incentivosClient;
         this.logisticaClient = logisticaClient;
+        this.consultasClient = consultasClient;
+        
     }
 
     // ---------------------------------
@@ -374,5 +380,21 @@ public class Fachada {
 
     public ResponseEntity<List<DonacionHistDTO>> buscarDonacionesHist(String donacionID){
         return donacionesClient.getDonacionesHistPorID(donacionID);
+    }
+
+    // --------------------
+    // ----- Consultas-----
+    // --------------------
+
+    public Optional<FichaIntegralDonador> getFichaIntegralDonador( String id){
+        return consultasClient.getFichaIntegralDonador(id);
+    }
+
+    public Optional<EstadoDepositos> getEstadoDeposito( String id){
+        return consultasClient.getEstadoDeposito(id);
+    }
+
+    public Optional<List<EstadoDepositos>> getEstadoDepositos(){
+        return consultasClient.getEstadoDepositos();
     }
 }
