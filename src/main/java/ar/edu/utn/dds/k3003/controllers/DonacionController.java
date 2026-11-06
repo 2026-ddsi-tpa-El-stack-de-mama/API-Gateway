@@ -53,57 +53,62 @@ public class DonacionController {
         }
 	}
 
-    //Prueba
-    @GetMapping("/donaciones/{id}/prueba")
-	public ResponseEntity<?> getDonacionByIdPrueba(@PathVariable("id") String donacionID) {
-        try{
-            return this.fachada.buscarDonacion(donacionID);
-        } catch(RuntimeException ex){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage() + "\n Y la causa es: " + ex.getCause()+ "\n Y la suprimida es: " +ex.getSuppressed());
-        }
-	}
-
-    //Prueba 2
-    @GetMapping("/donaciones/{id}/prueba/2")
-	public ResponseEntity<?> getDonacionByIdPrueba2(@PathVariable("id") String donacionID) {
-        try{
-            return this.fachada.buscarDonacion(donacionID);
-        } catch(RuntimeException ex){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage() + "\n Y el m arcort es: " + ex.getLocalizedMessage());
-        }
-	}
 
     
     @GetMapping("/donaciones")
     public ResponseEntity<?> getDonaciones(){
-        return this.fachada.obtenerDonaciones();
+        try{
+            return this.fachada.obtenerDonaciones();
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @DeleteMapping("/donaciones/{id}")
-    public ResponseEntity<DonacionDTO> deleteDonacion(@PathVariable("id") String donacionID) {
+    public ResponseEntity<?> deleteDonacion(@PathVariable("id") String donacionID) {
         //DonacionDTO donacionEliminada = fachada.eliminarDonacion(donacionID);
         //return ResponseEntity.ok(donacionEliminada);
-        return this.fachada.eliminarDonacion(donacionID);
-    
+        
+
+        try{
+            return this.fachada.eliminarDonacion(donacionID);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
     
     @GetMapping("/donaciones/search/{id}/{date}")
     public ResponseEntity<?> findByDonadorAndFechaInicio(@PathVariable("id") String donadorID, @PathVariable("date") LocalDate fecha){
-        return this.fachada.findByDonadorAndFechaInicio(donadorID, fecha);
+        
+        try{
+            return this.fachada.findByDonadorAndFechaInicio(donadorID, fecha);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @PatchMapping("/donaciones/{id}/estado")
     public ResponseEntity<?> cambiarEstadoDeDonacion(
             @PathVariable("id") String donacionID, 
             @RequestParam EstadoDonacionEnum estado){
-        return fachada.cambiarEstadoDeDonacion(donacionID, estado);  
+        
+        try{
+            return fachada.cambiarEstadoDeDonacion(donacionID, estado);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @PostMapping("/donaciones/{id}/queja")
     public ResponseEntity<?> registrarQuejaEnDonacion(
             @PathVariable("id") String donacionID, 
             @RequestBody String descripcion){
+            
+        try{
             return fachada.registrarQuejaEnDonacion(donacionID,descripcion);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
     
     // ----- ------------- -----
@@ -112,29 +117,54 @@ public class DonacionController {
 
     @PostMapping("/productos")
     public ResponseEntity<?> registrarProducto(@RequestBody ProductoDTO productoDTO) {
-        return fachada.registrarProducto(productoDTO);
+        
+        try{
+            return fachada.registrarProducto(productoDTO);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @DeleteMapping ("/productos/{id}")
-    public ResponseEntity<String> eliminarProducto(@PathVariable("id") String productoID){
-        return ResponseEntity.ok(this.fachada.eliminarProducto(productoID));
+    public ResponseEntity<?> eliminarProducto(@PathVariable("id") String productoID){
+        
+        try{
+            return this.fachada.eliminarProducto(productoID);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @PutMapping("/productos/{id}")
-    public ResponseEntity<ProductoDTO> modificarProducto(
+    public ResponseEntity<?> modificarProducto(
             @PathVariable("id") String productoID,
             @RequestBody ProductoDTO nuevoProductoDTO) {
-        return fachada.modificarProducto(nuevoProductoDTO, productoID);
+        
+        try{
+            return fachada.modificarProducto(nuevoProductoDTO, productoID);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
     
     @GetMapping("/productos/{id}")
     public ResponseEntity<?> buscarProducto(String id){
-        return fachada.buscarProducto(id);
+        
+        try{
+            return fachada.buscarProducto(id);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @GetMapping("/productos")
-    public ResponseEntity<List <ProductoDTO>> obtenerProductos() {
-        return fachada.obtenerProductos();
+    public ResponseEntity<?> obtenerProductos() {
+        
+        try{
+            return fachada.obtenerProductos();
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
     
     // ----- ---------------- -----
@@ -142,18 +172,33 @@ public class DonacionController {
     // ----- ---------------- -----
 
     @PostMapping("/identificadores")
-    public ResponseEntity<IdentificadorDTO> registrarIdentificador(@RequestBody IdentificadorDTO identificadorDTO) {
-        return fachada.registrarIdentificador(identificadorDTO);
+    public ResponseEntity<?> registrarIdentificador(@RequestBody IdentificadorDTO identificadorDTO) {
+        
+        try{
+            return fachada.registrarIdentificador(identificadorDTO);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
     
     @GetMapping("/identificadores")
-    public ResponseEntity<List<IdentificadorDTO>> obtenerIdentificadores() {
-        return fachada.obtenerIdentificadores();
+    public ResponseEntity<?> obtenerIdentificadores() {
+        
+        try{
+           return fachada.obtenerIdentificadores();
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
     
     @DeleteMapping("/identificadores/{id}")
-    public ResponseEntity<String> eliminarIdentificador(@PathVariable("id") String identificadorID){
-        return ResponseEntity.ok(fachada.eliminarIdentificador(identificadorID));
+    public ResponseEntity<?> eliminarIdentificador(@PathVariable("id") String identificadorID){
+        
+        try{
+           return fachada.eliminarIdentificador(identificadorID);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     // ----- ------------ -----
@@ -161,18 +206,33 @@ public class DonacionController {
     // ----- ------------ -----
 
     @PostMapping("/categorias")
-    public ResponseEntity<CategoriaDTO> registrarCategoria(@RequestBody CategoriaDTO categoriaDTO) {
-        return fachada.registrarCategoria(categoriaDTO);
+    public ResponseEntity<?> registrarCategoria(@RequestBody CategoriaDTO categoriaDTO) {
+        
+        try{
+           return fachada.registrarCategoria(categoriaDTO);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
     
     @GetMapping("/categorias")
-    public ResponseEntity<List<CategoriaDTO>> obtenerCategorias() {
-        return fachada.obtenerCategorias();
+    public ResponseEntity<?> obtenerCategorias() {
+        
+        try{
+           return fachada.obtenerCategorias();
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
     
     @DeleteMapping("/categorias/{id}")
-    public ResponseEntity<String> eliminarCategoria(@PathVariable("id") String categoriaID){
-        return ResponseEntity.ok(fachada.eliminarCategoria(categoriaID));
+    public ResponseEntity<?> eliminarCategoria(@PathVariable("id") String categoriaID){
+        
+        try{
+           return fachada.eliminarCategoria(categoriaID);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     // ----- ----------------- -----
@@ -180,13 +240,23 @@ public class DonacionController {
     // ----- ----------------- -----
 
     @GetMapping("/donacioneshist")
-    public ResponseEntity<List<DonacionHistDTO>> obtenerDonacionesHist() {
-        return fachada.obtenerDonacionesHist();
+    public ResponseEntity<?> obtenerDonacionesHist() {
+        try{
+           return fachada.obtenerDonacionesHist();
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
+        
     }
 
     @GetMapping("/donacioneshist/{id}")
-    public ResponseEntity<List<DonacionHistDTO>> buscarDonacionesHist(@PathVariable("id") String donacionID) {
-        return fachada.buscarDonacionesHist(donacionID);
+    public ResponseEntity<?> buscarDonacionesHist(@PathVariable("id") String donacionID) {
+        
+        try{
+           return fachada.buscarDonacionesHist(donacionID);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
 }

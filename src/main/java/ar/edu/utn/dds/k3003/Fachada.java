@@ -122,13 +122,8 @@ public class Fachada {
         return donadoresYEntidadesClient.obtenerNecesidadesInsatisfechasDe(productoID);
     }
 
-    public String eliminarNecesidad(String id) {
-        try {
-            donadoresYEntidadesClient.eliminarNecesidad(id);
-            return "La necesidad con ID " + id + " fue eliminada correctamente.";
-        } catch (Exception e) {
-            return "No se pudo eliminar la necesidad con ID " + id + ".";
-        }
+    public ResponseEntity<?> eliminarNecesidad(String id) {
+        return donadoresYEntidadesClient.eliminarNecesidad(id);
     }
 
     public ResponseEntity<NecesidadMaterialDTO> modificarNecesidad(String id, NecesidadMaterialDTO necesidadDTO) {
@@ -147,14 +142,9 @@ public class Fachada {
         return incentivosClient.postInsignia(insignia);
     }
 
-    public String eliminarInsignia(String id){
-        try {
-            incentivosClient.deleteInsignia(id);
-            return "La insignia con ID " + id + " fue eliminada correctamente.";
-
-        } catch (Exception e) {
-            return "No se pudo eliminar la insignia con ID " + id + ".";
-        }
+    public ResponseEntity<?> eliminarInsignia(String id){  
+        return incentivosClient.deleteInsignia(id);
+        
     }
 
     public ResponseEntity<?> modificarInsignia(String insigniaID,InsigniaDTO insigniaDTO){
@@ -283,13 +273,8 @@ public class Fachada {
         return donacionesClient.postProducto(productoDTO);
     }
 
-    public String eliminarProducto(String id){
-        try {
-            donacionesClient.deleteProducto(id);
-            return "El producto con ID " + id + " fue eliminado correctamente.";
-        } catch (Exception e) {
-            return "No se pudo eliminar el producto con ID " + id + ".";
-        }
+    public ResponseEntity<?> eliminarProducto(String id){
+        return donacionesClient.deleteProducto(id);
     }
 
     public ResponseEntity<ProductoDTO> modificarProducto(ProductoDTO productoDTO, String productoID){
@@ -313,13 +298,8 @@ public class Fachada {
         return donacionesClient.getIdentificadores();
     }
 
-    public String eliminarIdentificador(String id){
-        try {
-            donacionesClient.deleteIdentificador(id);
-            return "El identificador con ID " + id + " fue eliminado correctamente.";
-        } catch (Exception e) {
-            return "No se pudo eliminar el identificador con ID " + id + ".";
-        }
+    public ResponseEntity<?> eliminarIdentificador(String id){
+        return donacionesClient.deleteIdentificador(id);
     }
 
     // ----- Categorias
@@ -331,13 +311,8 @@ public class Fachada {
         return donacionesClient.getCategorias();
     }
 
-    public String eliminarCategoria(String id){
-        try {
-            donacionesClient.deleteCategoria(id);
-            return "La categoria con ID " + id + " fue eliminada correctamente.";
-        } catch (Exception e) {
-            return "No se pudo eliminar la categoria con ID " + id + ".";
-        }
+    public ResponseEntity<?> eliminarCategoria(String id){
+        return donacionesClient.deleteCategoria(id);
     }
 
     // ----- DonacionesHist

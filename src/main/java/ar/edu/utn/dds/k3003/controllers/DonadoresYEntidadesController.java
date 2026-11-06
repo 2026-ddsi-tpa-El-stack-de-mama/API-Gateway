@@ -12,6 +12,7 @@ import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.DonadorStatsDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.EntidadBeneficaDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.NecesidadMaterialDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.QuejaDTO;
+import ar.edu.utn.dds.k3003.exceptions.ManejoDeExcepciones;
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.HistorialEstadoDonadorDTO;
 
 // Los que en el modulo original no estaban como ResponseEntity son:
@@ -21,9 +22,10 @@ import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.HistorialEstadoDona
 @RequestMapping("/donadoresyentidades")
 public class DonadoresYEntidadesController {
     private final Fachada fachada;
-
+    private final ManejoDeExcepciones mdExcepciones;
     public DonadoresYEntidadesController(Fachada fachada) {
         this.fachada = fachada;
+        this.mdExcepciones= new ManejoDeExcepciones();
     }
 
     // ----- ------------ -----
@@ -31,23 +33,43 @@ public class DonadoresYEntidadesController {
     // ----- ------------ -----
 
     @PostMapping("/donadores")
-    public ResponseEntity<DonadorDTO> registrarDonador(@RequestBody DonadorDTO donadorDTO){
-        return fachada.registrarDonador(donadorDTO);
+    public ResponseEntity<?> registrarDonador(@RequestBody DonadorDTO donadorDTO){
+        
+        try{
+           return fachada.registrarDonador(donadorDTO);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @GetMapping("/donadores/{id}/estadisticas")
-    public ResponseEntity<DonadorStatsDTO> obtenerEstadisticasDonador(@PathVariable String id){
-        return fachada.obtenerEstadisticasDonador(id);
+    public ResponseEntity<?> obtenerEstadisticasDonador(@PathVariable String id){
+        try{
+           return fachada.obtenerEstadisticasDonador(id);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @GetMapping("/donadores/{id}")
-    public ResponseEntity<DonadorDTO> buscarDonador(@PathVariable String id){
-        return fachada.buscarDonador(id);
+    public ResponseEntity<?> buscarDonador(@PathVariable String id){
+        
+        try{
+           return fachada.buscarDonador(id);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @GetMapping("/donadores")
-    public ResponseEntity<List<DonadorDTO>> obtenerDonadores(){
-        return fachada.obtenerDonadores();
+    public ResponseEntity<?> obtenerDonadores(){
+        
+
+        try{
+           return fachada.obtenerDonadores();
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
     /*
     Faltan:
@@ -55,8 +77,13 @@ public class DonadoresYEntidadesController {
     modificarCategoria
     */
     @GetMapping("/donadores/{id}/puede-donar")
-    public ResponseEntity<Boolean> puedeDonar(@PathVariable String id){
-        return fachada.puedeDonar(id);
+    public ResponseEntity<?> puedeDonar(@PathVariable String id){
+        
+        try{
+           return fachada.puedeDonar(id);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     // Despues tal vez pedirle a Abel que revise como tiene su manejo de exceptions
@@ -71,8 +98,13 @@ public class DonadoresYEntidadesController {
     }
 
     @GetMapping("/donadores/{id}/quejas")
-    public ResponseEntity<List<QuejaDTO>> obtenerQuejas(@PathVariable String id){
-        return fachada.obtenerQuejas(id);
+    public ResponseEntity<?> obtenerQuejas(@PathVariable String id){
+        
+        try{
+           return fachada.obtenerQuejas(id);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     // Cuiado que no es un ResponseEntity
@@ -89,46 +121,86 @@ public class DonadoresYEntidadesController {
     // ----- De Entidades -----
     // ----- ------------ -----
     @PostMapping("/entidades")
-    public ResponseEntity<EntidadBeneficaDTO> agregarEntidad(@RequestBody EntidadBeneficaDTO entidadDTO){
-        return fachada.registrarEntidad(entidadDTO);
+    public ResponseEntity<?> agregarEntidad(@RequestBody EntidadBeneficaDTO entidadDTO){
+        
+        try{
+           return fachada.registrarEntidad(entidadDTO);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @PutMapping("/entidades/{id}")
-    public ResponseEntity<EntidadBeneficaDTO> modificarEntidad(@PathVariable String id, @RequestBody EntidadBeneficaDTO entidadDTO){
-        return fachada.modificarEntidad(id, entidadDTO);
+    public ResponseEntity<?> modificarEntidad(@PathVariable String id, @RequestBody EntidadBeneficaDTO entidadDTO){
+        
+        try{
+           return fachada.modificarEntidad(id, entidadDTO);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @GetMapping("/entidades")
-    public ResponseEntity<List<EntidadBeneficaDTO>> obtenerEntidades(){
-        return fachada.obtenerEntidades();
+    public ResponseEntity<?> obtenerEntidades(){
+        
+        try{
+           return fachada.obtenerEntidades();
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @GetMapping("/entidades/{id}")
-    public ResponseEntity<EntidadBeneficaDTO> buscarEntidad(@PathVariable String id){
-        return fachada.buscarEntidad(id);
+    public ResponseEntity<?> buscarEntidad(@PathVariable String id){
+        
+        try{
+           return fachada.buscarEntidad(id);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
     
     // ----- -------------- -----
     // ----- De Necesidades -----
     // ----- -------------- -----
     @PostMapping("/necesidades")
-    public ResponseEntity<NecesidadMaterialDTO> registrarNecesidad(@RequestBody NecesidadMaterialDTO necesidadDTO){
-        return fachada.registrarNecesidad(necesidadDTO);
+    public ResponseEntity<?> registrarNecesidad(@RequestBody NecesidadMaterialDTO necesidadDTO){
+        
+        try{
+           return fachada.registrarNecesidad(necesidadDTO);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @GetMapping("/necesidades")
-    public ResponseEntity<List<NecesidadMaterialDTO>> obtenerNecesidades(){
-        return fachada.obtenerNecesidades();
+    public ResponseEntity<?> obtenerNecesidades(){
+        
+        try{
+           return fachada.obtenerNecesidades();
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @GetMapping("/necesidades/{necesidadID}")
-    public ResponseEntity<NecesidadMaterialDTO> obtenerNecesidad(@PathVariable String necesidadID){
-        return fachada.buscarNecesidad(necesidadID);
+    public ResponseEntity<?> obtenerNecesidad(@PathVariable String necesidadID){
+        
+        try{
+           return fachada.buscarNecesidad(necesidadID);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @GetMapping("/necesidades/insatisfechas")
     public ResponseEntity<?> obtenerNecesidadesInsatisfechasDe(@RequestParam String productoId){
-        return fachada.obtenerNecesidadesInsatisfechasDe(productoId);
+        
+        try{
+           return fachada.obtenerNecesidadesInsatisfechasDe(productoId);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
         //try{
         //    return ResponseEntity.ok(fachada.obtenerNecesidadesInsatisfechasDe(productoId));
         //}catch(RuntimeException ex){
@@ -137,18 +209,33 @@ public class DonadoresYEntidadesController {
     }
 
     @DeleteMapping("/necesidades/{necesidadID}")
-    public ResponseEntity<String> eliminarNecesidad(@PathVariable String necesidadID){
-        return ResponseEntity.ok(fachada.eliminarNecesidad(necesidadID));
+    public ResponseEntity<?> eliminarNecesidad(@PathVariable String necesidadID){
+        
+        try{
+           return ResponseEntity.ok(fachada.eliminarNecesidad(necesidadID));
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @PutMapping("/necesidades/{necesidadID}")
-    public ResponseEntity<NecesidadMaterialDTO> modificarNecesidad(@PathVariable String necesidadID, @RequestBody NecesidadMaterialDTO necesidadDTO){
-        return fachada.modificarNecesidad(necesidadID, necesidadDTO);
+    public ResponseEntity<?> modificarNecesidad(@PathVariable String necesidadID, @RequestBody NecesidadMaterialDTO necesidadDTO){
+        
+        try{
+           return fachada.modificarNecesidad(necesidadID, necesidadDTO);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @PostMapping("/necesidades/{necesidadID}/satisfaccion")
     public ResponseEntity<?> satisfacerNecesidad(@PathVariable String necesidadID, @RequestParam Integer cantidad){
-        return fachada.satisfacerNecesidad(necesidadID, cantidad);
+        
+        try{
+           return fachada.satisfacerNecesidad(necesidadID, cantidad);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
 }

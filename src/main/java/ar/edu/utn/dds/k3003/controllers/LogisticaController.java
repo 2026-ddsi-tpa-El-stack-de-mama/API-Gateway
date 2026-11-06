@@ -6,6 +6,7 @@ import ar.edu.utn.dds.k3003.Fachada;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.AsignacionDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.AsignacionDirecta;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.PaqueteDTO;
+import ar.edu.utn.dds.k3003.exceptions.ManejoDeExcepciones;
 import ar.edu.utn.dds.k3003.model.*;
 
 
@@ -16,22 +17,34 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/logistica")
 public class LogisticaController {
     private final Fachada fachada;
+    private final ManejoDeExcepciones mdExcepciones;
     
     public LogisticaController(Fachada fachada) {
         this.fachada = fachada;
+        this.mdExcepciones= new ManejoDeExcepciones();
     }
 
-
+/*
     @GetMapping("/asignaciones/{id}")
     public Asignacion getAsignacion(@PathVariable String id){
         return fachada.getAsignacion(id);
+        try{
+           return fachada.eliminarCategoria(categoriaID);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
 
     @GetMapping("/asignaciones")
     public List<Asignacion> getAsignaciones() {
         return fachada.getAsignaciones();
+        try{
+           return fachada.eliminarCategoria(categoriaID);
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
     }
-
+*/
     /*
     @GetMapping("/asignacionesHistorial")
     public List<AsignacionesHistorial> getAsignacionesHistorial(){
