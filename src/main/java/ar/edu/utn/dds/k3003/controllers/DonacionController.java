@@ -30,9 +30,9 @@ public class DonacionController {
     private final Fachada fachada;
     private final ManejoDeExcepciones mdExcepciones;
 
-    public DonacionController(Fachada fachada, ManejoDeExcepciones mdExcepciones) {
+    public DonacionController(Fachada fachada) {
         this.fachada = fachada;
-        this.mdExcepciones= mdExcepciones;
+        this.mdExcepciones= new ManejoDeExcepciones();
     }
     // ----- ------------- -----
     // ----- De donaciones -----
