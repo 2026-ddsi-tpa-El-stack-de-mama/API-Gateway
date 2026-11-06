@@ -23,10 +23,13 @@ import ar.edu.utn.dds.k3003.clientes.DonadoresYEntidadesClient;
 import ar.edu.utn.dds.k3003.clientes.IncentivosClient;
 import ar.edu.utn.dds.k3003.clientes.LogisticaClient;
 import ar.edu.utn.dds.k3003.dtosBot.InsigniasResponse;
+import ar.edu.utn.dds.k3003.model.Asignacion;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -220,11 +223,17 @@ public class Fachada {
     public ResponseEntity<?> historialMisiones( String donadorID){
         return historialMisiones(donadorID);
     }
-    /*
+    
     // ---------------------
     // ----- Logistica -----
     // ---------------------
-
+    
+    // Prueba
+    public Asignacion getAsignacion( String id){
+        return logisticaClient.getAsignacion(id);
+    }
+    
+    /*
     public Optional<PaqueteDTO> buscarPaquete(String id){
         return logisticaClient.buscarPaquete(id);
     }
