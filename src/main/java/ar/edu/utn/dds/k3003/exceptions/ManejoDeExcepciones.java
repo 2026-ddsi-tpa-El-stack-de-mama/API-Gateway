@@ -12,10 +12,19 @@ public class ManejoDeExcepciones {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         } else if (ex.getCause() instanceof SecurityException) {
             status = HttpStatus.FORBIDDEN;
-        } else {
+        } else if (ex.getMessage()!= null && mensajeDeNotFound(ex)){
+            status = HttpStatus.NOT_FOUND;
+        } else{
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-
         return ResponseEntity.status(status).body(ex.getMessage());
+    }
+
+    private Boolean mensajeDeNotFound(RuntimeException ex){
+        return 
+            ex.getMessage().toLowerCase().contains("no existe") || 
+            ex.getMessage().toLowerCase().contains("inexistente") ||
+            ex.getMessage().toLowerCase().contains("404")||
+            ex.getMessage().toLowerCase().contains("not_found");
     }
 }

@@ -62,6 +62,17 @@ public class DonacionController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage() + "\n Y la causa es: " + ex.getCause()+ "\n Y la suprimida es: " +ex.getSuppressed());
         }
 	}
+
+    //Prueba 2
+    @GetMapping("/donaciones/{id}/prueba/2")
+	public ResponseEntity<?> getDonacionByIdPrueba2(@PathVariable("id") String donacionID) {
+        try{
+            return this.fachada.buscarDonacion(donacionID);
+        } catch(RuntimeException ex){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage() + "\n Y el m arcort es: " + ex.getLocalizedMessage());
+        }
+	}
+
     
     @GetMapping("/donaciones")
     public ResponseEntity<?> getDonaciones(){
