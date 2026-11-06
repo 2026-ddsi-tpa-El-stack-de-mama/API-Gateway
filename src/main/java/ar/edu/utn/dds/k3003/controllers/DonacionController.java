@@ -52,6 +52,16 @@ public class DonacionController {
             return mdExcepciones.manejarRuntimeException(ex);
         }
 	}
+
+    //Prueba
+    @GetMapping("/donaciones/{id}/prueba")
+	public ResponseEntity<?> getDonacionByIdPrueba(@PathVariable("id") String donacionID) {
+        try{
+            return this.fachada.buscarDonacion(donacionID);
+        } catch(RuntimeException ex){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage() + "\n Y la causa es: " + ex.getCause());
+        }
+	}
     
     @GetMapping("/donaciones")
     public ResponseEntity<?> getDonaciones(){
