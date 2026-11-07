@@ -23,12 +23,13 @@ public interface IncentivosClient {
     @DeleteMapping("/insignias/{id}")
     public ResponseEntity<?> deleteInsignia(@PathVariable("id") String insigniaID);
 
-    @GetMapping("/insignias")
-    public ResponseEntity<List<InsigniaDTO>> getInsignias();
+    //Versión vieja
+    //@GetMapping("/insignias")
+    //public ResponseEntity<List<InsigniaDTO>> getInsignias();
 
-    //Para prueba
+    //Para mantener traceID
     @GetMapping("/insignias")
-    public ResponseEntity<?> getInsigniasPrueba1();
+    public ResponseEntity<?> getInsignias();
 
     @GetMapping("/insignias/{id}")
     public ResponseEntity<?> getInsigniaById(@PathVariable("id") String insigniaID);
@@ -49,8 +50,13 @@ public interface IncentivosClient {
     @PatchMapping("/donadores/{donadorID}/categoria")
      public ResponseEntity<?> registrarCambioCategoria(@PathVariable("donadorID") String donadorID, @RequestBody CambioCategoriaRequest request);
 
+    //Version vieja
+    //@GetMapping("/donadores/{donadorID}/categorias/historial")
+    //public ResponseEntity<List<CambioCategoriaDTO>> historialCategorias(@PathVariable("donadorID") String donadorID);
+
+    //Version Nueva
     @GetMapping("/donadores/{donadorID}/categorias/historial")
-    public ResponseEntity<List<CambioCategoriaDTO>> historialCategorias(@PathVariable("donadorID") String donadorID);
+    public ResponseEntity<?> historialCategorias(@PathVariable("donadorID") String donadorID);
 
 
     @PostMapping("/misiones")
@@ -64,8 +70,13 @@ public interface IncentivosClient {
     @DeleteMapping("/misiones/{id}")
     public ResponseEntity<?> deleteMision(@PathVariable("id") String misionID);
 
+    //Viejo
+    //@GetMapping("/misiones")
+    //public ResponseEntity<List<MisionDTO>> getMisiones();
+
+    //Nuevo
     @GetMapping("/misiones")
-    public ResponseEntity<List<MisionDTO>> getMisiones();
+    public ResponseEntity<?> getMisiones();
 
     @GetMapping("/misiones/{id}")
     public ResponseEntity<?> getMisionById(@PathVariable("id") String misionID);

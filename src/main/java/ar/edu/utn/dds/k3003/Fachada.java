@@ -168,22 +168,14 @@ public class Fachada {
         return incentivosClient.getInsigniaById(id);
     }
 
-    // Antes el tipo que devolvia era InsigniasResponse
-    public ResponseEntity<List<InsigniaDTO>> obtenerInsignias(){
-        return incentivosClient.getInsignias();
-    }
+    // Antes el tipo que devolvia era InsigniasResponse viejo
+    //public ResponseEntity<List<InsigniaDTO>> obtenerInsignias(){
+    //    return incentivosClient.getInsignias();
+    //}
 
-    //PRUEBA
-    public ResponseEntity<?> obtenerInsigniasPrueba1(){
-        return incentivosClient.getInsignias();
-    }
 
-    public ResponseEntity<List<InsigniaDTO>> obtenerInsigniasPrueba2(){
+    public ResponseEntity<?> obtenerInsignias(){
         return incentivosClient.getInsignias();
-    }
-
-    public ResponseEntity<?> obtenerInsigniasPrueba3(){
-        return incentivosClient.getInsigniasPrueba1();
     }
 
     //public ResponseEntity<List<InsigniaDTO>> obtenerInsigniasPrueba4(){
@@ -203,7 +195,11 @@ public class Fachada {
         return incentivosClient.registrarCambioCategoria(donadorID,request);
     }
 
-    public ResponseEntity<List<CambioCategoriaDTO>> historialCategorias(String donadorID){
+    //public ResponseEntity<List<CambioCategoriaDTO>> historialCategorias(String donadorID){
+    //    return incentivosClient.historialCategorias(donadorID);
+    //}
+
+    public ResponseEntity<?> historialCategorias(String donadorID){
         return incentivosClient.historialCategorias(donadorID);
     }
 
@@ -220,7 +216,10 @@ public class Fachada {
         return incentivosClient.deleteMision(misionID);
     }
 
-    public ResponseEntity<List<MisionDTO>> obtenerMisiones(){
+    //public ResponseEntity<List<MisionDTO>> obtenerMisiones(){
+    //    return incentivosClient.getMisiones();
+    //}
+    public ResponseEntity<?> obtenerMisiones(){
         return incentivosClient.getMisiones();
     }
 

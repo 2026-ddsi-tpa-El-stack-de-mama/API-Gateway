@@ -28,120 +28,18 @@ public class IncentivosController {
     // ----- ------------ -----
     // ----- De Insignias -----
     // ----- ------------ -----
-
-    // PRUEBA
-    // Sin el try catch
-    @GetMapping("/insignias/prueba1")
-    public ResponseEntity<?> getInsigniasPrueba1(){
-        return fachada.obtenerInsignias();
-    }
-
-    @GetMapping("/insignias/prueba2")
-    public ResponseEntity<?> getInsigniasPrueba2(){
-        return ResponseEntity.ok("Responde bien Incentivos");
-    }
-
-    @GetMapping("/insignias/prueba3")
-    public ResponseEntity<?> getInsigniasPrueba3(){
-        
-        try{
-           return ResponseEntity.ok("Response bien Incentivos");
-        } catch(RuntimeException ex){
-            return mdExcepciones.manejarRuntimeException(ex);
-        }
-    }
-
-    @GetMapping("/insignias/prueba4")
-    public ResponseEntity<?> getInsigniasPrueba4(){
-        
-        try{
-           return ResponseEntity.ok("Response bien Incentivos");
-        } catch(RuntimeException ex){
-            return ResponseEntity.ok("No responde bien Incentivos :(");
-        }
-    }
-
-    @GetMapping("/insignias/prueba5")
-    public ResponseEntity<?> getInsigniasPrueba5(){
-        
-        try{
-           return fachada.obtenerInsignias();
-        } catch(RuntimeException ex){
-            return ResponseEntity.ok("No responde bien Incentivos :(");
-        }
-    }
-
-    @GetMapping("/insignias/prueba6")
-    public ResponseEntity<?> getInsigniasPrueba6(){
-        
-        try{
-           return fachada.obtenerInsignias();
-        } catch(RuntimeException ex){
-            return ResponseEntity.ok("No responde bien Incentivos :(");
-        }
-    }
-
-    @GetMapping("/insignias/prueba7")
-    public ResponseEntity<?> getInsigniasPrueba7(){
-        
-        try{
-           return fachada.obtenerInsigniasPrueba1();
-        } catch(RuntimeException ex){
-            return mdExcepciones.manejarRuntimeException(ex);
-        }
-    }
-
-    @GetMapping("/insignias/prueba8")
-    public ResponseEntity<?> getInsigniasPrueba8(){
-        
-        try{
-           return fachada.obtenerInsigniasPrueba2();
-        } catch(RuntimeException ex){
-            return mdExcepciones.manejarRuntimeException(ex);
-        }
-    }
-
+    /*
     @GetMapping("/insignias/prueba9")
     public ResponseEntity<?> getInsigniasPrueba9(){
         
         try{
-           return fachada.obtenerInsigniasPrueba3();
+           return fachada.obtenerInsigniasNuevo();
         } catch(RuntimeException ex){
             return mdExcepciones.manejarRuntimeException(ex);
         }
-    }
+    } 
 
-    @GetMapping("/insignias/{id}/prueba1")
-    public ResponseEntity<?> getInsigniaByIdPrueba1(@PathVariable("id") String insigniaID){  
-           return fachada.buscarInsignia(insigniaID);
-    }
-
-    @GetMapping("/insignias/{id}/prueba2")
-    public ResponseEntity<?> getInsigniaByIdPrueba2(@PathVariable("id") String insigniaID){
-        
-        return ResponseEntity.ok("Responde bien Incentivos" + insigniaID);
-    }
-
-    @GetMapping("/insignias/{id}/prueba3")
-    public ResponseEntity<?> getInsigniaByIdPrueba3(@PathVariable("id") String insigniaID){
-        
-        try{
-           return ResponseEntity.ok("Responde bien Incentivos" + insigniaID);
-        } catch(RuntimeException ex){
-            return mdExcepciones.manejarRuntimeException(ex);
-        }
-    }
-
-    @GetMapping("/insignias/{id}/prueba4")
-    public ResponseEntity<?> getInsigniaByIdPrueba4(@PathVariable("id") String insigniaID){
-        
-        try{
-           return ResponseEntity.ok("Responde bien Incentivos" + insigniaID);
-        } catch(RuntimeException ex){
-            return ResponseEntity.ok("No responde bien Incentivos :(");
-        }
-    }
-
+    */
     @PostMapping("/insignias")
     public ResponseEntity<?> postInsignia(@RequestBody InsigniaDTO insigniaDTO){
         
@@ -173,7 +71,7 @@ public class IncentivosController {
     }
 
     @GetMapping("/insignias")
-    public ResponseEntity<?> getInsignias(){
+    public ResponseEntity<?> getInsigniasNuevo(){
         
         try{
            return fachada.obtenerInsignias();
