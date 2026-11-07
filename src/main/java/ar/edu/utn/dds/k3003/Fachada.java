@@ -173,6 +173,23 @@ public class Fachada {
         return incentivosClient.getInsignias();
     }
 
+    //PRUEBA
+    public ResponseEntity<?> obtenerInsigniasPrueba1(){
+        return incentivosClient.getInsignias();
+    }
+
+    public ResponseEntity<List<InsigniaDTO>> obtenerInsigniasPrueba2(){
+        return incentivosClient.getInsignias();
+    }
+
+    public ResponseEntity<?> obtenerInsigniasPrueba3(){
+        return incentivosClient.getInsigniasPrueba1();
+    }
+
+    //public ResponseEntity<List<InsigniaDTO>> obtenerInsigniasPrueba4(){
+    //    return incentivosClient.getInsigniasPrueba1();
+    //}
+
     public ResponseEntity<?> asignarInsigniaADonador(String insigniaID, String donadorID){
         return incentivosClient.asignarInsigniaADonador(insigniaID, donadorID);
     }

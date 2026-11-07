@@ -61,6 +61,55 @@ public class IncentivosController {
         }
     }
 
+    @GetMapping("/insignias/prueba5")
+    public ResponseEntity<?> getInsigniasPrueba5(){
+        
+        try{
+           return fachada.obtenerInsignias();
+        } catch(RuntimeException ex){
+            return ResponseEntity.ok("No responde bien Incentivos :(");
+        }
+    }
+
+    @GetMapping("/insignias/prueba6")
+    public ResponseEntity<?> getInsigniasPrueba6(){
+        
+        try{
+           return fachada.obtenerInsignias();
+        } catch(RuntimeException ex){
+            return ResponseEntity.ok("No responde bien Incentivos :(");
+        }
+    }
+
+    @GetMapping("/insignias/prueba7")
+    public ResponseEntity<?> getInsigniasPrueba7(){
+        
+        try{
+           return fachada.obtenerInsigniasPrueba1();
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
+    }
+
+    @GetMapping("/insignias/prueba8")
+    public ResponseEntity<?> getInsigniasPrueba8(){
+        
+        try{
+           return fachada.obtenerInsigniasPrueba2();
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
+    }
+
+    @GetMapping("/insignias/prueba9")
+    public ResponseEntity<?> getInsigniasPrueba9(){
+        
+        try{
+           return fachada.obtenerInsigniasPrueba3();
+        } catch(RuntimeException ex){
+            return mdExcepciones.manejarRuntimeException(ex);
+        }
+    }
 
     @GetMapping("/insignias/{id}/prueba1")
     public ResponseEntity<?> getInsigniaByIdPrueba1(@PathVariable("id") String insigniaID){  

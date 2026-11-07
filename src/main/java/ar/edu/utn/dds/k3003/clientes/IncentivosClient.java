@@ -26,6 +26,10 @@ public interface IncentivosClient {
     @GetMapping("/insignias")
     public ResponseEntity<List<InsigniaDTO>> getInsignias();
 
+    //Para prueba
+    @GetMapping("/insignias")
+    public ResponseEntity<?> getInsigniasPrueba1();
+
     @GetMapping("/insignias/{id}")
     public ResponseEntity<?> getInsigniaById(@PathVariable("id") String insigniaID);
 
