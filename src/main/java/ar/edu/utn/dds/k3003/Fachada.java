@@ -357,7 +357,7 @@ public class Fachada {
         return donacionesClient.putProducto(productoID, productoDTO);
     }
 
-    public ResponseEntity<?> getProductoByID(String id){
+    public ResponseEntity<ProductoDTO> getProductoByID(String id){
         return donacionesClient.getProductoByID(id);
     }
 
