@@ -3,14 +3,12 @@ package ar.edu.utn.dds.k3003.clases;
 import ar.edu.utn.dds.k3003.catedra.dtos.donadoresYEntidades.EntidadBeneficaDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.AsignacionDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.TipoAlgoritmoEnum;
-
-
 //import org.springframework.data.annotation.Id;
 //import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-//@Document(collection = "Estado-Deposito")
+//Document(collection = "Estado-Deposito")
 public class EstadoDepositos {
     //@Id
     private String idDeposito;

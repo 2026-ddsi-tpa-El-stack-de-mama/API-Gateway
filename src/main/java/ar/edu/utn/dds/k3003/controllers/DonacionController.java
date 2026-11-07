@@ -148,10 +148,10 @@ public class DonacionController {
     }
     
     @GetMapping("/productos/{id}")
-    public ResponseEntity<?> buscarProducto(String id){
+    public ResponseEntity<?> getProductoByID(String id){
         
         try{
-            return fachada.buscarProducto(id);
+            return fachada.getProductoByID(id);
         } catch(RuntimeException ex){
             return mdExcepciones.manejarRuntimeException(ex);
         }

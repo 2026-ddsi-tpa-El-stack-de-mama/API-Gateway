@@ -19,8 +19,10 @@ import ar.edu.utn.dds.k3003.catedra.dtos.incentivos.CambioCategoriaRequest;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.AsignacionDTO;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.AsignacionDirecta;
 import ar.edu.utn.dds.k3003.catedra.dtos.logistica.PaqueteDTO;
+import ar.edu.utn.dds.k3003.clases.CalidadDonacion;
 import ar.edu.utn.dds.k3003.clases.EstadoDepositos;
 import ar.edu.utn.dds.k3003.clases.FichaIntegralDonador;
+import ar.edu.utn.dds.k3003.clases.NecesidadesUrgentesSinCubrir;
 import ar.edu.utn.dds.k3003.clientes.ConsultasClient;
 import ar.edu.utn.dds.k3003.clientes.DonacionesClient;
 import ar.edu.utn.dds.k3003.clientes.DonadoresYEntidadesClient;
@@ -355,7 +357,7 @@ public class Fachada {
         return donacionesClient.putProducto(productoID, productoDTO);
     }
 
-    public ResponseEntity<?> buscarProducto(String id){
+    public ResponseEntity<?> getProductoByID(String id){
         return donacionesClient.getProductoByID(id);
     }
 
@@ -406,11 +408,31 @@ public class Fachada {
         return consultasClient.getFichaIntegralDonador(id);
     }
 
+    public Optional<List<FichaIntegralDonador>> getFichaIntegralDonadores(){
+        return consultasClient.getFichaIntegralDonadores();
+    }
+
     public Optional<EstadoDepositos> getEstadoDeposito( String id){
         return consultasClient.getEstadoDeposito(id);
     }
 
     public Optional<List<EstadoDepositos>> getEstadoDepositos(){
         return consultasClient.getEstadoDepositos();
+    }
+
+    public Optional<CalidadDonacion> getCalidadDonacion( String id){
+        return consultasClient.getCalidadDonacion(id);
+    }
+
+    public Optional<List<CalidadDonacion>> getCalidadDonaciones(){
+        return consultasClient.getCalidadDonaciones();
+    }
+
+    public Optional<NecesidadesUrgentesSinCubrir> getNecesidadUrgenteSinCubrir( String id){
+        return consultasClient.getNecesidadUrgenteSinCubrir(id);
+    }
+
+    public Optional<List<NecesidadesUrgentesSinCubrir>> getNecesidadesUrgentesSinCubrir(){
+        return consultasClient.getNecesidadesUrgentesSinCubrir();
     }
 }
