@@ -228,19 +228,19 @@ public class Fachada {
     }
 
     public ResponseEntity<?> asignarMisionADonador(String misionID,String donadorID){
-        return asignarMisionADonador(misionID, donadorID);
+        return incentivosClient.asignarMisionADonador(misionID, donadorID);
       }
 
     public ResponseEntity<?> getMisionEnCursoDeDonador( String donadorID){
-        return getMisionEnCursoDeDonador(donadorID);
+        return incentivosClient.getMisionEnCursoDeDonador(donadorID);
     }
 
     public ResponseEntity<?> procesarDonador( String donadorID){
-        return procesarDonador(donadorID);
+        return incentivosClient.procesarDonador(donadorID);
     }
 
     public ResponseEntity<?> historialMisiones( String donadorID){
-        return historialMisiones(donadorID);
+        return incentivosClient.historialMisiones(donadorID);
     }
     
     // ---------------------
